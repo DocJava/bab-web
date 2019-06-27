@@ -6,13 +6,14 @@ import {
     FILTER_MEMBER,
     FILTER_PLAYER,
     REMOVE_PLAYER,
+    SELECT_COURT_NUMBER,
     SELECT_MEMBER,
     SELECT_PLAYER,
     START_UPDATING_PLAYER,
-    UPDATE_PLAYER
-} from "../actions/index";
+    UPDATE_PLAYER,
+    SELECT_COURT_RANDOMS
+} from "../actions";
 import _ from 'lodash';
-import {SELECT_COURT_RANDOMS} from "../actions";
 
 const defaultState = {
     players: {},
@@ -22,6 +23,7 @@ const defaultState = {
     playerNameFilter: null,
     memberNameFilter: null,
     playerNames: [],
+    court: {},
     useCourtRandoms: false,
     courtCreatable: false
 };
@@ -81,6 +83,11 @@ export default function (state = defaultState, action) {
             const memberNameFilter = action.payload;
 
             return { ...state, memberNameFilter };
+
+        case SELECT_COURT_NUMBER:
+            const courtNumber = action.payload;
+
+            return { ...state, courtNumber }
     }
 
     return state;

@@ -12,6 +12,7 @@ const CREATE_PLAYER_ENDPOINT = "players/add";
 const DELETE_PLAYER_ENDPOINT = "players/delete";
 
 const CREATE_COURT_ENDPOINT = "courts/register";
+const REMOVE_RESERVATION_ENDPOINT = "courts/unregister";
 
 export const FETCH_MEMBERS = 'FETCH_MEMBERS';
 export const FETCH_PLAYERS = 'FETCH_PLAYERS';
@@ -25,12 +26,14 @@ export const UPDATE_PLAYER = 'UPDATE_PLAYER';
 
 // non get Court requests
 export const CREATE_COURT = 'CREATE_COURT';
+export const REMOVE_RESERVATION = 'REMOVE_RESERVATION';
 
 export const SELECT_PLAYER = 'SELECT_PLAYER';
 export const DESELECT_PLAYERS = 'DESELECT_PLAYERS';
 export const START_UPDATING_PLAYER = 'START_UPDATING_PLAYER';
 export const CANCEL_PLAYER_UPDATE = 'CANCEL_PLAYER_UPDATE';
 export const SELECT_MEMBER = 'SELECT_MEMBER';
+export const SELECT_COURT_NUMBER = 'SELECT_COURT_NUMBER';
 export const SELECT_COURT_RANDOMS = 'SELECT_COURT_RANDOMS';
 
 export const FILTER_PLAYER = 'FILTER_PLAYER';
@@ -107,6 +110,13 @@ export function selectMember(member) {
     return {
         type: SELECT_MEMBER,
         payload: member
+    };
+}
+
+export function selectCourtNumber({ courtNumber = -1 }) {
+    return {
+        type: SELECT_COURT_NUMBER,
+        payload: courtNumber
     };
 }
 
@@ -225,6 +235,27 @@ export async function createCourt(court) {
         console.log(error);
         type = SET_TOAST;
         payload = "Unable to create the court";
+    });
+
+    return {
+        type,
+        payload
+    };
+}
+
+export async function removeReservation({ token }) {
+    let type = REMOVE_RESERVATION;
+    let payload = null;
+
+    await axios.post(
+        BASE_URL + REMOVE_RESERVATION_ENDPOINT,
+        { token }
+    ).then(() => {
+        payload = token;
+    }).catch(error => {
+        console.log(error);
+        type = SET_TOAST;
+        payload = "Unable to remove reservation";
     });
 
     return {

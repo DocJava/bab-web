@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {requestCourts, requestPlayers} from "../../actions";
-import Court from "../../components/court/Court";
+import CourtSelect from "../../components/court/CourtSelect";
 import {IonLabel, IonList, IonListHeader} from "@ionic/react";
 
 import {CourtCreateModal} from '../../components/court/CourtCreateModal';
 import Refresher from "../../components/Refresher";
+import {CourtEditModal} from "../../components/court/CourtEditModal";
 
 const twoMinutesMillis = 120000;
 
@@ -26,13 +27,12 @@ export default function CourtPanel() {
         return () => clearInterval(interval);
     }, []);
 
-    const courtsFor = (courtList, isCurrentCourt) => {
+    const courtsFor = (courtList) => {
         return (
             <>
                 {courtList.map(court => (
-                    <Court court={court}
-                           isCurrentCourt={isCurrentCourt}
-                           key={court.id}/>
+                    <CourtSelect court={court}
+                                 key={court.id}/>
                 ))}
             </>
         );
@@ -47,16 +47,17 @@ export default function CourtPanel() {
                     <IonLabel>Current Courts</IonLabel>
                 </IonListHeader>
 
-                {courtsFor(current, true)}
+                {courtsFor(current)}
 
                 <IonListHeader>
                     <IonLabel>Upcoming Courts</IonLabel>
                 </IonListHeader>
 
-                {courtsFor(upcoming, false)}
+                {courtsFor(upcoming)}
             </IonList>
 
             <CourtCreateModal/>
+            <CourtEditModal/>
         </>
     );
 }

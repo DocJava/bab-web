@@ -1,11 +1,11 @@
 /* eslint-disable default-case */
-import {CREATE_COURT, FETCH_COURTS} from "../actions/index";
+import {CREATE_COURT, FETCH_COURTS, REMOVE_RESERVATION} from "../actions/index";
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
 const now = () => new Date();
 
-export default function (state = { current: [], upcoming: [], reservations: [] }, action) {
+export default function (state = { current: [], upcoming: [], reservations: [], courtGroups: {} }, action) {
 
     let reservations;
 
@@ -13,11 +13,19 @@ export default function (state = { current: [], upcoming: [], reservations: [] }
         case FETCH_COURTS:
             reservations = action.payload.data.reservations;
             return splitReservations(reservations);
+
         case CREATE_COURT:
             const court = action.payload.data.reservation;
             reservations = state.reservations;
 
             reservations.push(court);
+
+            return splitReservations(reservations);
+
+        case REMOVE_RESERVATION:
+            const reservationToken = action.payload;
+
+            reservations = _.reject(state.reservations, ({ token }) => token === reservationToken);
 
             return splitReservations(reservations);
     }
@@ -26,16 +34,17 @@ export default function (state = { current: [], upcoming: [], reservations: [] }
 }
 
 function splitReservations(reservations, state) {
-    reservations = _.reject(reservations, 'randoms');
-    reservations = _.map(reservations, courtInTimezone);
+    const formattedReservations =  _.map(reservations, preformattedReservation);
 
-    // if we find that "randoms" are important information to view,
-    // then we can just partition by randoms to display later
+    const courtGroups = _.groupBy(_.map(formattedReservations, formatReservation), 'courtNumber');
 
-    const sortedReservations = _.sortBy(reservations, ['courtNumber', 'startAt']);
+    const randomlessReservations = _.reject(formattedReservations, 'randoms');
+
+    const sortedReservations = _.sortBy(randomlessReservations, ['courtNumber', 'startAt']);
     const courts = mergeReservations(sortedReservations);
     const sortedCourts = _.sortBy(courts, ['startAt']);
-    const [currentCourts, upcomingCourts] = _.partition(sortedCourts, 'isCurrentCourt');
+    const courtsWithReservations = _.each(sortedCourts, (court) => court.reservations = courtGroups[court.courtNumber]);
+    const [currentCourts, upcomingCourts] = _.partition(courtsWithReservations, 'isCurrentCourt');
 
     const current = _.map(currentCourts, formatCurrentCourt);
     const upcoming = _.map(upcomingCourts, formatUpcomingCourt);
@@ -44,17 +53,20 @@ function splitReservations(reservations, state) {
         ...state,
         current,
         upcoming,
-        reservations
+        reservations,
+        courtGroups
     };
 }
 
-function courtInTimezone(court) {
+function preformattedReservation(court) {
     return {
+        ...court,
         courtNumber: court.courtNumber,
         startAt: moment(court.startAt).tz('America/Los_Angeles'),
         endAt: moment(court.endAt).tz('America/Los_Angeles'),
         randoms: court.randoms,
-        isCurrentCourt: now() - court.startAt >= 0
+        isCurrentCourt: now() - court.startAt >= 0,
+        reservations: []
     }
 }
 
@@ -77,19 +89,29 @@ function mergeReservations(reservations) {
     }, []);
 }
 
-function formatCurrentCourt({ courtNumber, endAt }) {
-    const duration = moment.duration(endAt - now());
+function formatReservation(reservation) {
+    const startString = reservation.isCurrentCourt ? "Started at " : "Starting at ";
+
     return {
-        courtNumber,
+        ...reservation,
+        time: startString + reservation.startAt.format("hh:mm")
+    }
+}
+
+function formatCurrentCourt(court) {
+    const duration = moment.duration(court.endAt - now());
+
+    return {
+        ...court,
         time: `${formatTime(duration)} remaining`
     };
 }
 
-function formatUpcomingCourt({ courtNumber, startAt }) {
-    const duration = moment.duration(startAt - now());
+function formatUpcomingCourt(court) {
+    const duration = moment.duration(court.startAt - now());
 
     return {
-        courtNumber,
+        ...court,
         time: `${formatTime(duration)} wait`
     };
 }
