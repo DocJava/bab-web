@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {requestCourts, requestPlayers} from "../../actions";
-import Court from "../../components/court/Court";
+import CourtSelect from "../../components/court/CourtSelect";
 import {IonLabel, IonList, IonListHeader} from "@ionic/react";
 
 import {CourtCreateModal} from '../../components/court/CourtCreateModal';
+import {CourtEditModal} from "../../components/court/CourtEditModal";
 
 export default function Courts() {
     const { current, upcoming } = useSelector(state => state.courts);
@@ -19,9 +20,9 @@ export default function Courts() {
         return (
             <>
                 {courtList.map(court => (
-                    <Court court={court}
-                           isCurrentCourt={isCurrentCourt}
-                           key={court.id}/>
+                    <CourtSelect court={court}
+                                 isCurrentCourt={isCurrentCourt}
+                                 key={court.id}/>
                 ))}
             </>
         );
@@ -44,6 +45,7 @@ export default function Courts() {
             </IonList>
 
             <CourtCreateModal/>
+            <CourtEditModal/>
         </>
     );
 }

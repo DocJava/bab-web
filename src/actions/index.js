@@ -32,6 +32,7 @@ export const DESELECT_PLAYERS = 'DESELECT_PLAYERS';
 export const START_UPDATING_PLAYER = 'START_UPDATING_PLAYER';
 export const CANCEL_PLAYER_UPDATE = 'CANCEL_PLAYER_UPDATE';
 export const SELECT_MEMBER = 'SELECT_MEMBER';
+export const SELECT_COURT = 'SELECT_COURT';
 
 export const FILTER_PLAYER = 'FILTER_PLAYER';
 export const FILTER_MEMBER = 'FILTER_MEMBER';
@@ -105,6 +106,13 @@ export function selectMember(member) {
     return {
         type: SELECT_MEMBER,
         payload: member
+    };
+}
+
+export function selectCourt(court = {}) {
+    return {
+        type: SELECT_COURT,
+        payload: court
     };
 }
 

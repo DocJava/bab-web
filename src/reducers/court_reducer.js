@@ -48,13 +48,15 @@ function splitReservations(reservations, state) {
     };
 }
 
+//todo thought process is that a court can have a list of reservations, and the reservations can be deleted
 function courtInTimezone(court) {
     return {
         courtNumber: court.courtNumber,
         startAt: moment(court.startAt).tz('America/Los_Angeles'),
         endAt: moment(court.endAt).tz('America/Los_Angeles'),
         randoms: court.randoms,
-        isCurrentCourt: now - court.startAt >= 0
+        isCurrentCourt: now - court.startAt >= 0,
+        reservations: []
     }
 }
 

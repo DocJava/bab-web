@@ -1,9 +1,13 @@
 import React from 'react';
 import {IonCard, IonCardSubtitle, IonItem} from "@ionic/react";
+import {selectCourt} from "../../actions";
 
-export default function Court({ court }) {
+export default function CourtSelect({ court }) {
+
     return (
-        <IonCard>
+        <IonCard onclick={() => selectCourt(court)}
+                 data-toggle="modal"
+                 data-target="#courtEditModal">
             <IonItem>
                 <IonCardSubtitle>Court {court.courtNumber}</IonCardSubtitle>
             </IonItem>

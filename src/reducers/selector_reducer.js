@@ -6,6 +6,7 @@ import {
     FILTER_MEMBER,
     FILTER_PLAYER,
     REMOVE_PLAYER,
+    SELECT_COURT,
     SELECT_MEMBER,
     SELECT_PLAYER,
     START_UPDATING_PLAYER,
@@ -20,7 +21,8 @@ const defaultState = {
     playerToUpdate: {},
     playerNameFilter: null,
     memberNameFilter: null,
-    playerNames: []
+    playerNames: [],
+    court: {}
 };
 
 export default function (state = defaultState, action) {
@@ -66,6 +68,11 @@ export default function (state = defaultState, action) {
             const memberNameFilter = action.payload;
 
             return { ...state, memberNameFilter };
+
+        case SELECT_COURT:
+            const court = action.payload;
+
+            return { ...state, court }
     }
 
     return state;
