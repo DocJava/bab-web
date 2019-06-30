@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6cb339c9e6eb99f1441351fe9b65ca3f",
+    "revision": "618db3474762b6b0c79c633b1b84833b",
     "url": "/bab-web/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/bab-web/static/css/11.7d6935d3.chunk.css"
   },
   {
-    "revision": "c88dd7fe3f6eb3c3cf67",
+    "revision": "b3baece6a55c15b20553",
     "url": "/bab-web/static/css/main.5ab2c2c1.chunk.css"
   },
   {
@@ -416,8 +416,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/bab-web/static/js/99.e5038a77.chunk.js"
   },
   {
-    "revision": "c88dd7fe3f6eb3c3cf67",
-    "url": "/bab-web/static/js/main.f2c2a28c.chunk.js"
+    "revision": "b3baece6a55c15b20553",
+    "url": "/bab-web/static/js/main.ac74c91e.chunk.js"
   },
   {
     "revision": "d0c6e3655bb0ba75658d",
