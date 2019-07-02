@@ -1,13 +1,14 @@
 /* eslint-disable default-case */
 import {
     CANCEL_MEMBER_CREATE,
+    CREATE_COURT,
     CREATE_PLAYER,
     FETCH_COURTS,
     FETCH_MEMBERS,
     FETCH_PLAYERS,
     FILTER_MEMBER,
     FILTER_PLAYER,
-    REMOVE_PLAYER,
+    REMOVE_PLAYER, REMOVE_RESERVATION,
     UPDATE_PLAYER
 } from "../actions/index";
 import _ from 'lodash';
@@ -106,6 +107,24 @@ export default function (state = defaultState, action) {
             return updateStateForPlayers({
                 ...state,
                 reservedPlayerNames
+            });
+
+        case CREATE_COURT:
+            let playersOnCourt = action.payload.data.reservation.players;
+            playersOnCourt = _.map(playersOnCourt, _.upperFirst);
+
+            return updateStateForPlayers({
+                ...state,
+                reservedPlayerNames: _.union(state.reservedPlayerNames, playersOnCourt)
+            });
+
+        case REMOVE_RESERVATION:
+            let playersRemoved = action.payload.players;
+            playersRemoved = _.map(playersRemoved, _.upperFirst);
+
+            return updateStateForPlayers({
+                ...state,
+                reservedPlayerNames: _.without(state.reservedPlayerNames, ...playersRemoved)
             });
     }
 

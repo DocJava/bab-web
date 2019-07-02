@@ -23,7 +23,7 @@ export default function (state = { current: [], upcoming: [], reservations: [], 
             return splitReservations(reservations);
 
         case REMOVE_RESERVATION:
-            const reservationToken = action.payload;
+            const reservationToken = action.payload.token;
 
             reservations = _.reject(state.reservations, ({ token }) => token === reservationToken);
 

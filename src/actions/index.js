@@ -243,15 +243,15 @@ export async function createCourt(court) {
     };
 }
 
-export async function removeReservation({ token }) {
+export async function removeReservation(reservation) {
     let type = REMOVE_RESERVATION;
     let payload = null;
 
     await axios.post(
         BASE_URL + REMOVE_RESERVATION_ENDPOINT,
-        { token }
+        { token : reservation.token}
     ).then(() => {
-        payload = token;
+        payload = reservation;
     }).catch(error => {
         console.log(error);
         type = SET_TOAST;
