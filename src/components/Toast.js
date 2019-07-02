@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 export default function Toast() {
     const dispatch = useDispatch();
-    const toastMessage = useSelector(state => state.messages.toast);
+    const toastMessage = useSelector(state => state.displays.toast);
 
     return (
         <IonToast

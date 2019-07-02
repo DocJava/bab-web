@@ -40,6 +40,8 @@ export const CANCEL_MEMBER_CREATE = 'CANCEL_MEMBER_CREATE';
 
 export const SET_TOAST = "SET_TOAST";
 export const CLEAR_TOAST = "CLEAR_TOAST";
+export const DISPLAY_MODAL = "DISPLAY_MODAL";
+export const CLEAR_MODAL = "CLEAR_MODAL";
 
 // Setup the content-type and make sure data is form-encoded.
 axios.interceptors.request.use((config) => {
@@ -231,9 +233,21 @@ export async function createCourt(court) {
     };
 }
 
-
 export function clearToast() {
     return {
         type: CLEAR_TOAST
+    };
+}
+
+export function displayModal(modalId = "pageModal") {
+    return {
+        type: DISPLAY_MODAL,
+        payload: modalId
+    };
+}
+
+export function clearModal() {
+    return {
+        type: CLEAR_MODAL
     };
 }

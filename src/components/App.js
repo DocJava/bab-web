@@ -4,21 +4,11 @@ import '../style/App.css';
 import MemberPane, {MemberSelectorFooter} from '../containers/member/MemberPanel';
 import PlayerPanel, {PlayerPanelFooter} from '../containers/player/PlayerPanel';
 import CourtPanel from '../containers/court/CourtPanel';
-import {
-    IonApp,
-    IonContent,
-    IonFab,
-    IonFabButton,
-    IonHeader,
-    IonIcon,
-    IonLabel,
-    IonSegment,
-    IonSegmentButton,
-    IonToolbar
-} from '@ionic/react';
+import {IonApp, IonContent, IonHeader, IonLabel, IonSegment, IonSegmentButton, IonToolbar} from '@ionic/react';
 import '@ionic/core/css/core.css';
 import '@ionic/core/css/ionic.bundle.css';
 import Toast from "./Toast";
+import {FloatingActionButton} from "./FloatingActionButton";
 
 const PLAYER_PANE = "PLAYER_PANE";
 const COURT_PANE = "COURT_PANE";
@@ -32,13 +22,7 @@ export default function App() {
     let customFooter = null;
     let pane = null;
 
-    let floatingActionButton = (
-        <IonFab vertical="bottom" horizontal="end" slot="fixed">
-            <IonFabButton data-toggle="modal" data-target="#pageModal">
-                <IonIcon name="add"/>
-            </IonFabButton>
-        </IonFab>
-    );
+    let floatingActionButton = <FloatingActionButton/>;
 
     switch (selectedPane) {
         case PLAYER_PANE:

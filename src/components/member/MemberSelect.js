@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {selectMember} from "../../actions";
+import {displayModal, selectMember} from "../../actions";
 import {IonLabel} from "@ionic/react";
 
 export default function MemberSelect({ member, highlighted: isNewMember }) {
@@ -10,6 +10,7 @@ export default function MemberSelect({ member, highlighted: isNewMember }) {
         if (!isNewMember) {
             dispatch(selectMember(member));
         }
+        dispatch(displayModal());
     };
 
     let displayName = member.isNew ? `Create password for: "${member.name}"` : member.name;
@@ -17,8 +18,6 @@ export default function MemberSelect({ member, highlighted: isNewMember }) {
     return (
         <IonLabel
             onClick={handleSelectMember}
-            data-toggle="modal"
-            data-target="#pageModal"
         >
             {displayName}
         </IonLabel>

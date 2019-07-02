@@ -1,58 +1,68 @@
 import React from 'react';
-import {IonButton, IonIcon, IonItem} from "@ionic/react";
+import {IonButton, IonIcon, IonItem, IonPopover, IonRow} from "@ionic/react";
+import {useDispatch, useSelector} from "react-redux";
+import {clearModal} from "../actions";
 
-export function Modal({ children = <ModalBody/>, modalId = "pageModal" }) {
+export function Modal({ children, modalId = "pageModal" }) {
+    const dispatch = useDispatch();
+    const modalToDisplay = useSelector(state => state.displays.modalToDisplay);
+
+    const handleCloseModal = () => dispatch(clearModal());
+    const isOpen = modalToDisplay === modalId;
+
     return (
-        <div className="modal fade" id={modalId}
-             role="dialog" data-backdrop="false">
-            <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-                <div className="modal-content">
-                    {children}
-                </div>
-            </div>
-        </div>
+        <IonPopover
+            isOpen={isOpen}
+            onDidDismiss={handleCloseModal}
+        >
+            {children}
+        </IonPopover>
     );
 }
 
 export function ModalHeader({ children }) {
     return (
-        <div className="modal-header">
+        <IonRow>
             {children}
-        </div>
+        </IonRow>
     );
 }
 
 export function ModalFooter({ onCancel, onSuccess, successEnabled = true }) {
-    return (
-        <div className="modal-footer">
-            <IonItem className="w-100" lines="none">
-                <IonButton color="danger"
-                           onClick={onCancel}
-                           slot="start"
-                           size="medium"
-                           data-dismiss="modal"
-                >
-                    <IonIcon slot="icon-only" name="close-circle"/>
-                </IonButton>
+    const dispatch = useDispatch();
 
-                <IonButton color="success"
-                           onClick={onSuccess}
-                           disabled={!successEnabled}
-                           slot="end"
-                           data-dismiss="modal"
-                           size="medium"
-                >
-                    <IonIcon slot="icon-only" name="checkmark-circle"/>
-                </IonButton>
-            </IonItem>
-        </div>
-    );
-}
+    const handleCancel = () => {
+        if (onCancel) {
+            onCancel();
+        }
+        dispatch(clearModal());
+    };
 
-export function ModalBody({ children }) {
+    const handleSuccess = () => {
+        if (onSuccess) {
+            onSuccess();
+        }
+        dispatch(clearModal());
+    };
+
     return (
-        <div className="modal-body">
-            {children}
-        </div>
+        <IonItem className="w-100 pt-2 pb-2" lines="none">
+            <IonButton color="danger"
+                       onClick={handleCancel}
+                       slot="start"
+                       size="medium"
+            >
+                <IonIcon slot="icon-only" name="close-circle"/>
+            </IonButton>
+
+            <IonButton color="success"
+                       onClick={handleSuccess}
+                       disabled={!successEnabled}
+                       slot="end"
+                       size="medium"
+            >
+                <IonIcon slot="icon-only" name="checkmark-circle"/>
+            </IonButton>
+        </IonItem>
     );
 }

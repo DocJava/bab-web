@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Modal, ModalBody, ModalFooter} from '../../components/Modal';
+import {Modal, ModalFooter} from '../../components/Modal';
 import {IonCardHeader, IonCardTitle} from "@ionic/react";
 import {cancelCreatingMember, createPlayer} from "../../actions";
 import PasswordSelector from "../../containers/PasswordSelector";
@@ -16,19 +16,17 @@ export function MemberCreateModal() {
 
     return (
         <Modal>
-            <ModalBody>
-                <IonCardHeader>
-                    <IonCardTitle>{member.name}</IonCardTitle>
-                </IonCardHeader>
+            <IonCardHeader>
+                <IonCardTitle>{member.name}</IonCardTitle>
+            </IonCardHeader>
 
 
-                <PasswordSelector selectedPassword={memberPassword}
-                                  updatePassword={updateMemberPassword}/>
+            <PasswordSelector selectedPassword={memberPassword}
+                              updatePassword={updateMemberPassword}/>
 
-                <ModalFooter
-                    onCancel={handleCancel}
-                    onSuccess={handlePlayerCreate}/>
-            </ModalBody>
+            <ModalFooter
+                onCancel={handleCancel}
+                onSuccess={handlePlayerCreate}/>
         </Modal>
     );
 }

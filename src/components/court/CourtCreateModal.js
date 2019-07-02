@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {createCourt, deselectPlayers} from "../../actions";
 import PlayerSelector from '../../containers/player/PlayerSelector';
-import {Modal, ModalBody, ModalFooter, ModalHeader} from '../Modal';
-import {IonInput, IonItem} from "@ionic/react";
+import {Modal, ModalFooter, ModalHeader} from '../Modal';
+import {IonCol, IonInput, IonItem} from "@ionic/react";
 
 export function CourtCreateModal() {
     const dispatch = useDispatch();
@@ -23,26 +23,28 @@ export function CourtCreateModal() {
     return (
         <Modal>
             <ModalHeader>
-                <IonItem lines="none">
-                    <span className="mr-2 text-muted">Court Number:</span>
-                    <IonInput placeholder="Enter Court Number"
-                              type="number"
-                              value={courtNumber}
-                              onIonChange={(e) => setCourtNumber(e.target.value)}/>
-                </IonItem>
+                <IonCol>
+                    <IonItem lines="none">
+                        <span className="mr-2 text-muted">Court Number:</span>
+                        <IonInput placeholder="Enter Court Number"
+                                  type="number"
+                                  value={courtNumber}
+                                  onIonChange={(e) => setCourtNumber(e.target.value)}/>
+                    </IonItem>
+                </IonCol>
 
-                <IonItem lines="none">
-                    <span className="mr-2 text-muted">Delay:</span>
-                    <IonInput placeholder="Enter Delay"
-                              type="number"
-                              value={delay}
-                              onIonChange={(e) => setDelay(e.target.value)}/>
-                </IonItem>
+                <IonCol slot="end">
+                    <IonItem lines="none">
+                        <span className="mr-2 text-muted">Delay:</span>
+                        <IonInput placeholder="Enter Delay"
+                                  type="number"
+                                  value={delay}
+                                  onIonChange={(e) => setDelay(e.target.value)}/>
+                    </IonItem>
+                </IonCol>
             </ModalHeader>
 
-            <ModalBody>
-                <PlayerSelector/>
-            </ModalBody>
+            <PlayerSelector/>
 
             <ModalFooter onCancel={handleCancel}
                          onSuccess={handleCreateCourt}
