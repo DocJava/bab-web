@@ -2,13 +2,15 @@ import React from 'react';
 import {IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel} from "@ionic/react";
 import {useDispatch} from "react-redux";
 import {removeReservation} from "../../actions";
+import closeOpenSlider from "../../utils/closeOpenSlider";
 
-export default function Reservation({ reservation }) {
+export default function ReservationSlider({ reservation }) {
     const dispatch = useDispatch();
 
     const names = (reservation.players.join(" ")) || "randoms";
 
     const handleReservationDelete = () => {
+        closeOpenSlider();
         dispatch(removeReservation(reservation));
     };
 

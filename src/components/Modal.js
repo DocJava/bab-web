@@ -2,6 +2,7 @@ import React from 'react';
 import {IonButton, IonIcon, IonItem, IonPopover, IonRow} from "@ionic/react";
 import {useDispatch, useSelector} from "react-redux";
 import {clearModal} from "../actions";
+import closeOpenSlider from "../utils/closeOpenSlider";
 
 export function Modal({ children, modalId = "pageModal" }) {
     const dispatch = useDispatch();
@@ -35,6 +36,8 @@ export function ModalFooter({ onCancel, onSuccess, successEnabled = true }) {
         if (onCancel) {
             onCancel();
         }
+
+        closeOpenSlider();
         dispatch(clearModal());
     };
 

@@ -2,6 +2,7 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 import {displayModal, removePlayer, startUpdatingPlayer} from "../../actions";
 import {IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel} from '@ionic/react';
+import closeOpenSlider from "../../utils/closeOpenSlider";
 
 export default function PlayerSlider({ player }) {
     const dispatch = useDispatch();
@@ -10,7 +11,10 @@ export default function PlayerSlider({ player }) {
         dispatch(startUpdatingPlayer(player));
         dispatch(displayModal("playerEditModal"));
     };
-    const handleRemoveButton = () => dispatch(removePlayer(player));
+    const handleRemoveButton = () => {
+        closeOpenSlider();
+        dispatch(removePlayer(player));
+    };
 
     return (
         <IonItemSliding value={player._id}>

@@ -27,7 +27,7 @@ export default function PlayerPanel() {
         <>
             <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
 
-            <IonList>
+            <IonList id="player-panel__list">
                 <IonListHeader>
                     <IonLabel>Available players</IonLabel>
                 </IonListHeader>

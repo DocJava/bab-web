@@ -1,9 +1,9 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearModal, selectCourtNumber} from "../../actions";
-import {Modal, ModalBody, ModalFooter, ModalHeader} from '../Modal';
+import {Modal, ModalFooter, ModalHeader} from '../Modal';
 import {IonCardTitle, IonItem, IonList} from "@ionic/react";
-import Reservation from './Reservation';
+import ReservationSlider from './ReservationSlider';
 
 export function CourtEditModal() {
     const dispatch = useDispatch();
@@ -27,7 +27,7 @@ export function CourtEditModal() {
             </ModalHeader>
 
             <IonList>
-                {reservations && reservations.map(reservation => <Reservation reservation={reservation}/>)}
+                {reservations && reservations.map(reservation => <ReservationSlider reservation={reservation}/>)}
             </IonList>
 
             <ModalFooter onCancel={handleCancel}/>
