@@ -1,13 +1,11 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {requestPlayers} from "../../actions";
-import PlayerSlider from "../../components/player/PlayerSlider";
+import PlayerListItem from "../../components/player/PlayerListItem";
 
-import {IonLabel, IonList, IonListHeader} from '@ionic/react';
 import PlayerEditModal from "../../components/player/PlayerEditModal";
 import PlayerCreateModal from "../../components/player/PlayerCreateModal";
-import Refresher from "../../components/Refresher";
-import {Layout} from "antd";
+import {Layout, List} from "antd";
 import {PlayerPanelFooter} from "../../components/player/PlayerPanelFooter";
 
 
@@ -29,28 +27,17 @@ export default function PlayerPanel() {
     return (
         <Layout>
             <Content>
-                <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
+                <List>
+                    <div className="list-header">Available players</div>
+                    {availablePlayers.map(player => <PlayerListItem player={player}/>)}
 
-                <IonList id="player-panel__list">
-                    <IonListHeader>
-                        <IonLabel>Available players</IonLabel>
-                    </IonListHeader>
-                    {availablePlayers.map(player => (
-                        <PlayerSlider player={player} key={player._id}/>
-                    ))}
-
-                    <IonListHeader>
-                        <IonLabel>Players in use</IonLabel>
-                    </IonListHeader>
-                    {reservedPlayers.map(player => (
-                        <PlayerSlider player={player} key={player._id}/>
-                    ))}
-                </IonList>
+                    <div className="list-header">Players in use</div>
+                    {reservedPlayers.map(player => <PlayerListItem player={player} key={player._id}/>)}
+                </List>
             </Content>
 
             <Footer>
                 <PlayerPanelFooter/>
-
             </Footer>
 
             <PlayerEditModal/>
