@@ -1,14 +1,16 @@
 /* eslint-disable default-case */
 import React, {useState} from 'react';
 import '../style/App.css';
-import MemberPane, {MemberSelectorFooter} from '../containers/member/MemberPanel';
-import PlayerPanel, {PlayerPanelFooter} from '../containers/player/PlayerPanel';
+import MemberPanel from '../containers/member/MemberPanel';
+import PlayerPanel from '../containers/player/PlayerPanel';
 import CourtPanel from '../containers/court/CourtPanel';
-import {IonApp, IonContent, IonHeader, IonLabel, IonSegment, IonSegmentButton, IonToolbar} from '@ionic/react';
-import '@ionic/core/css/core.css';
-import '@ionic/core/css/ionic.bundle.css';
 import Toast from "./Toast";
 import {FloatingActionButton} from "./FloatingActionButton";
+import {Col, Layout, Row, Typography} from 'antd';
+
+const { Title} = Typography;
+
+const { Header, Content} = Layout;
 
 const PLAYER_PANE = "PLAYER_PANE";
 const COURT_PANE = "COURT_PANE";
@@ -17,9 +19,6 @@ const MEMBER_PANE = "MEMBER_PANE";
 export default function App() {
     const [selectedPane, setSelectedPane] = useState(COURT_PANE);
 
-    const handlePanelSelection = (e) => setSelectedPane(e.detail.value);
-
-    let customFooter = null;
     let pane = null;
 
     let floatingActionButton = <FloatingActionButton/>;
@@ -27,7 +26,6 @@ export default function App() {
     switch (selectedPane) {
         case PLAYER_PANE:
             pane = <PlayerPanel/>;
-            customFooter = <PlayerPanelFooter/>;
             break;
 
         case COURT_PANE:
@@ -35,46 +33,45 @@ export default function App() {
             break;
 
         case MEMBER_PANE:
-            customFooter = <MemberSelectorFooter/>;
-            pane = <MemberPane/>;
+            pane = <MemberPanel/>;
             floatingActionButton = null;
     }
 
+    const headerCol = (PANE, text) => (
+        <Col span={8} onClick={() => setSelectedPane(PANE)}>
+            <Title level={3}>{text}</Title>
+        </Col>
+    );
+
     const header = (
-        <IonHeader>
-            <IonToolbar class="header">
-                <IonSegment onIonChange={handlePanelSelection} value={selectedPane}>
-                    <IonSegmentButton value={COURT_PANE}>
-                        <IonLabel>Courts</IonLabel>
-                    </IonSegmentButton>
-                    <IonSegmentButton value={PLAYER_PANE}>
-                        <IonLabel>Players</IonLabel>
-                    </IonSegmentButton>
-                    <IonSegmentButton value={MEMBER_PANE}>
-                        <IonLabel>Members</IonLabel>
-                    </IonSegmentButton>
-                </IonSegment>
-            </IonToolbar>
-        </IonHeader>
+        <Header className="bg-light main-header">
+            <Row justify="space-around" align="middle">
+                {headerCol(COURT_PANE, "Courts")}
+                {headerCol(PLAYER_PANE, "Players")}
+                {headerCol(MEMBER_PANE, "Members")}
+            </Row>
+        </Header>
     );
 
     const body = (
-        <IonContent fullScreen>
+        <>
             {pane}
 
             {floatingActionButton}
 
             <Toast/>
-        </IonContent>
+        </>
     );
 
     return (
-        <IonApp>
+        <Layout className="main-layout">
             {header}
 
-            {body}
+            <Content>
+                {body}
 
-            {customFooter}
-        </IonApp>
+                {floatingActionButton}
+            </Content>
+        </Layout>
     );
 }

@@ -6,6 +6,9 @@ import {IonCol, IonFooter, IonGrid, IonRow, IonSearchbar, IonToolbar} from "@ion
 
 import {MemberCreateModal} from '../../components/member/MemberCreateModal';
 import Refresher from "../../components/Refresher";
+import {Layout} from "antd";
+
+const { Content, Footer } = Layout;
 
 export default function MemberSelector() {
     const memberChunks = useSelector(state => state.people.filteredMembers || state.people.chunkedMembers);
@@ -38,15 +41,21 @@ export default function MemberSelector() {
     }
 
     return (
-        <>
-            <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
+        <Layout>
+            <Content>
+                <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
 
-            <IonGrid title="Members">
-                {memberChunks.map(createRow)}
-            </IonGrid>
+                <IonGrid title="Members">
+                    {memberChunks.map(createRow)}
+                </IonGrid>
 
-            <MemberCreateModal/>
-        </>
+                <MemberCreateModal/>
+            </Content>
+
+            <Footer>
+                <MemberSelectorFooter/>
+            </Footer>
+        </Layout>
     );
 }
 

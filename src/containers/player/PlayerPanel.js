@@ -7,8 +7,11 @@ import {IonLabel, IonList, IonListHeader} from '@ionic/react';
 import PlayerEditModal from "../../components/player/PlayerEditModal";
 import PlayerCreateModal from "../../components/player/PlayerCreateModal";
 import Refresher from "../../components/Refresher";
+import {Layout} from "antd";
+import {PlayerPanelFooter} from "../../components/player/PlayerPanelFooter";
 
-export {PlayerPanelFooter} from "../../components/player/PlayerPanelFooter";
+
+const { Content, Footer } = Layout;
 
 
 export default function PlayerPanel() {
@@ -24,27 +27,34 @@ export default function PlayerPanel() {
     }, []);
 
     return (
-        <>
-            <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
+        <Layout>
+            <Content>
+                <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
 
-            <IonList id="player-panel__list">
-                <IonListHeader>
-                    <IonLabel>Available players</IonLabel>
-                </IonListHeader>
-                {availablePlayers.map(player => (
-                    <PlayerSlider player={player} key={player._id}/>
-                ))}
+                <IonList id="player-panel__list">
+                    <IonListHeader>
+                        <IonLabel>Available players</IonLabel>
+                    </IonListHeader>
+                    {availablePlayers.map(player => (
+                        <PlayerSlider player={player} key={player._id}/>
+                    ))}
 
-                <IonListHeader>
-                    <IonLabel>Players in use</IonLabel>
-                </IonListHeader>
-                {reservedPlayers.map(player => (
-                    <PlayerSlider player={player} key={player._id}/>
-                ))}
-            </IonList>
+                    <IonListHeader>
+                        <IonLabel>Players in use</IonLabel>
+                    </IonListHeader>
+                    {reservedPlayers.map(player => (
+                        <PlayerSlider player={player} key={player._id}/>
+                    ))}
+                </IonList>
+            </Content>
+
+            <Footer>
+                <PlayerPanelFooter/>
+
+            </Footer>
 
             <PlayerEditModal/>
             <PlayerCreateModal/>
-        </>
+        </Layout>
     );
 }

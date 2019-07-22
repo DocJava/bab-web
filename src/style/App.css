@@ -22,7 +22,7 @@ html, body, #root, .main-layout {
 
 .main-header {
     padding: 0;
-    height: 7%;
+    height: fit-content;
     display: table-cell;
 }
 
@@ -60,4 +60,14 @@ ion-refresher-content {
     margin-left: auto;
     margin-right: auto;
     width: 50%;
+}
+
+.ant-layout, .ant-layout-content {
+    height: 100%;
+    background-color: white;
+}
+
+.ant-layout-footer {
+    padding: 3px;
+    background-color: white;
 }
