@@ -1,5 +1,5 @@
 import React from 'react';
-import {IonButton} from "@ionic/react";
+import {Button} from "antd";
 
 const passwords = [
     'mouse',
@@ -18,18 +18,19 @@ const passwords = [
 ];
 
 export default function PasswordSelector({ selectedPassword, updatePassword }) {
-    const colorForPassword = (password) => password === selectedPassword ? "medium" : "light";
+    const isSelected = (password) => password === selectedPassword;
     const handleUpdatePassword = (password) => () => updatePassword(password);
 
     return (
         <div className="d-inline-flex flex-wrap justify-content-center">
             {passwords.map(password => (
-                <IonButton color={colorForPassword(password)}
+                <Button disabled={isSelected(password)}
                            onClick={handleUpdatePassword(password)}
                            key={password}
+                        className="m-1"
                 >
                     {password}
-                </IonButton>
+                </Button>
             ))}
         </div>
     );
