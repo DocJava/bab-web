@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {clearModal, selectCourtNumber} from "../../actions";
-import {Modal, ModalFooter, ModalHeader} from '../Modal';
+import {Modal, ModalHeader} from '../Modal';
 import {IonCardTitle, IonItem, IonList} from "@ionic/react";
 import ReservationSlider from './ReservationSlider';
 
@@ -19,7 +19,7 @@ export function CourtEditModal() {
     const handleCancel = () => dispatch(selectCourtNumber(-1));
 
     return (
-        <Modal modalId="courtEditModal">
+        <Modal modalId="courtEditModal" onCancel={handleCancel}>
             <ModalHeader>
                 <IonItem lines="none">
                     <IonCardTitle>Court {courtNumber}</IonCardTitle>
@@ -29,9 +29,6 @@ export function CourtEditModal() {
             <IonList>
                 {reservations && reservations.map(reservation => <ReservationSlider reservation={reservation}/>)}
             </IonList>
-
-            <ModalFooter onCancel={handleCancel}/>
-
         </Modal>
     );
 }

@@ -3,7 +3,7 @@ import {cancelPlayerUpdate, updatePlayer} from "../../actions";
 import React, {useState} from "react";
 import {IonCardHeader, IonCardTitle, IonInput, IonItem, IonItemDivider, IonLabel} from "@ionic/react";
 import PasswordSelector from "../../containers/PasswordSelector";
-import {Modal, ModalFooter} from "../Modal";
+import {Modal} from "../Modal";
 
 export default function PlayerEditModal() {
     const dispatch = useDispatch();
@@ -17,7 +17,9 @@ export default function PlayerEditModal() {
     const handleNameChange = (e) => updateNewPlayerName(e.target.value);
 
     return (
-        <Modal modalId="playerEditModal">
+        <Modal modalId="playerEditModal"
+                  onCancel={handleCancel}
+                  onSuccess={handlePlayerUpdate}>
             <IonCardHeader className="mb-2">
                 <IonCardTitle>{player.name} : {player.password}</IonCardTitle>
             </IonCardHeader>
@@ -39,11 +41,6 @@ export default function PlayerEditModal() {
                     className="text-muted">Is this correct?</span> {newPlayerName} : {newPlayerPassword}
                 </IonLabel>
             </IonItem>
-
-            <ModalFooter
-                onCancel={handleCancel}
-                onSuccess={handlePlayerUpdate}/>
-
         </Modal>
     );
 }

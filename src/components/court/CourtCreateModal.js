@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {createCourt, deselectPlayers} from "../../actions";
 import PlayerSelector from '../../containers/player/PlayerSelector';
-import {Modal, ModalFooter, ModalHeader} from '../Modal';
+import {Modal, ModalHeader} from '../Modal';
 import {IonCol, IonInput, IonItem} from "@ionic/react";
 
 export function CourtCreateModal() {
@@ -21,7 +21,10 @@ export function CourtCreateModal() {
     };
 
     return (
-        <Modal>
+        <Modal
+            onCancel={handleCancel}
+            onSuccess={handleCreateCourt}
+            successEnabled={courtCreatable}>
             <ModalHeader>
                 <IonCol>
                     <IonItem lines="none">
@@ -45,10 +48,6 @@ export function CourtCreateModal() {
             </ModalHeader>
 
             <PlayerSelector/>
-
-            <ModalFooter onCancel={handleCancel}
-                         onSuccess={handleCreateCourt}
-                         successEnabled={courtCreatable}/>
 
         </Modal>
     );

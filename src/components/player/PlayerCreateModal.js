@@ -3,7 +3,7 @@ import {createPlayer} from "../../actions";
 import React, {useState} from "react";
 import {IonCardHeader, IonCardTitle, IonInput, IonItem, IonItemDivider, IonLabel} from "@ionic/react";
 import PasswordSelector from "../../containers/PasswordSelector";
-import {Modal, ModalFooter} from "../Modal";
+import {Modal} from "../Modal";
 
 export default function PlayerAddModal() {
     const dispatch = useDispatch();
@@ -23,7 +23,11 @@ export default function PlayerAddModal() {
     const playerCreatable = name && password;
 
     return (
-        <Modal>
+        <Modal
+            onCancel={clearChanges}
+            onSuccess={handlePlayerCreate}
+            successEnabled={playerCreatable}>
+
             <IonCardHeader className="mb-2">
                 <IonCardTitle>Create new Player</IonCardTitle>
             </IonCardHeader>
@@ -44,12 +48,6 @@ export default function PlayerAddModal() {
                 <IonLabel><span className="text-muted">Is this correct?</span> {name} : {password}
                 </IonLabel>
             </IonItem>
-
-
-            <ModalFooter
-                onCancel={clearChanges}
-                onSuccess={handlePlayerCreate}
-                successEnabled={playerCreatable}/>
         </Modal>
     );
 
