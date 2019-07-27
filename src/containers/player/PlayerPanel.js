@@ -27,7 +27,7 @@ export default function PlayerPanel() {
     return (
         <Layout>
             <Content>
-                <List>
+                <List className="pb-5">
                     <div className="list-header">Available players</div>
                     {availablePlayers.map(player => <PlayerListItem player={player}/>)}
 

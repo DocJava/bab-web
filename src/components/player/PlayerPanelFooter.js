@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {playerFilterChanged} from "../../actions";
-import {IonFooter, IonSearchbar, IonToolbar} from "@ionic/react";
+import {Input, Icon} from 'antd';
 import React from "react";
 
 
@@ -11,13 +11,12 @@ export function PlayerPanelFooter() {
     const updateFilter = (event) => dispatch(playerFilterChanged(event.target.value));
 
     return (
-        <IonFooter>
-            <IonToolbar>
-                <IonSearchbar style={{ '--placeholder-color': 'red' }}
-                              placeholder="Filter or add Player"
-                              value={playerNameFilter}
-                              onIonInput={updateFilter}/>
-            </IonToolbar>
-        </IonFooter>
+        <Input
+            placeholder="Filter or add Player"
+            size="large"
+            prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+            value={playerNameFilter}
+            onChange={updateFilter}
+        />
     );
 }

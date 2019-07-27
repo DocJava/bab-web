@@ -23,7 +23,12 @@ html, body, #root, .main-layout {
 .main-header {
     padding: 0;
     height: fit-content;
-    display: table-cell;
+    display: block;
+    position: sticky;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
 }
 
 .main-header h3 {
@@ -70,6 +75,10 @@ ion-refresher-content {
 .ant-layout-footer {
     padding: 3px;
     background-color: white;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: fixed;
 }
 
 .list-header {
