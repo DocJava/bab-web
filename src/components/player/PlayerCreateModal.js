@@ -1,7 +1,7 @@
 import {useDispatch} from "react-redux";
 import {createPlayer} from "../../actions";
 import React, {useState} from "react";
-import {IonCardHeader, IonCardTitle, IonInput, IonItem, IonItemDivider, IonLabel} from "@ionic/react";
+import {Input, Divider} from 'antd';
 import PasswordSelector from "../../containers/PasswordSelector";
 import {Modal} from "../Modal";
 
@@ -26,28 +26,21 @@ export default function PlayerAddModal() {
         <Modal
             onCancel={clearChanges}
             onSuccess={handlePlayerCreate}
-            successEnabled={playerCreatable}>
+            successEnabled={playerCreatable}
+            title="Create new Player">
 
-            <IonCardHeader className="mb-2">
-                <IonCardTitle>Create new Player</IonCardTitle>
-            </IonCardHeader>
-
-            <IonItem lines="none">
-                <span className="mr-2 text-muted">Name:</span>
-                <IonInput placeholder="Enter Name"
-                          value={name}
-                          onIonChange={handleNameChange}/>
-            </IonItem>
+            <Input className="mb-2"
+                   addonBefore="Name:"
+                   placeholder="Enter Name"
+                   value={name}
+                   onChange={handleNameChange}/>
 
             <PasswordSelector selectedPassword={password}
                               updatePassword={updatePassword}/>
 
-            <IonItemDivider/>
+            <Divider/>
 
-            <IonItem lines="full">
-                <IonLabel><span className="text-muted">Is this correct?</span> {name} : {password}
-                </IonLabel>
-            </IonItem>
+            <span className="text-muted">Is this correct?</span> {name} : {password}
         </Modal>
     );
 

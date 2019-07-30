@@ -4,7 +4,7 @@ import {clearModal} from "../actions";
 import closeOpenSlider from "../utils/closeOpenSlider";
 import {Modal as AntModal, Row} from 'antd';
 
-export function Modal({ children, modalId = "pageModal", onCancel, onSuccess, successEnabled = true }) {
+export function Modal({ children, modalId = "pageModal", onCancel, onSuccess, successEnabled = true, title }) {
     const dispatch = useDispatch();
     const modalToDisplay = useSelector(state => state.displays.modalToDisplay);
 
@@ -32,6 +32,7 @@ export function Modal({ children, modalId = "pageModal", onCancel, onSuccess, su
         <AntModal
             visible={isOpen}
             onDidDismiss={handleCloseModal}
+            title={title}
             onOk={handleSuccess}
             onCancel={handleCancel}
             okButtonProps={{ disabled: !successEnabled }}
