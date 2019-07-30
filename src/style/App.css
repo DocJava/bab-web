@@ -39,20 +39,6 @@ html, body, #root, .main-layout {
     top: 10px;
 }
 
-ion-refresher-content {
-    background-color: #dedede;
-}
-
-.refresher-refreshing {
-    z-index: 2;
-}
-
-.popover-content {
-    --width: 85%;
-    padding-right: 5%;
-    padding-left: 5%;
-}
-
 .fab {
     position: fixed;
     right: 10px;
