@@ -3,14 +3,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import {deselectPlayers, requestPlayers, selectCourtRandoms} from "../../actions";
 import PlayerSelect from "../../components/player/PlayerSelect";
 
-import {IonButton, IonLabel, IonList, IonListHeader} from '@ionic/react';
+import {List, Radio} from 'antd';
 
 export default function PlayerSelector() {
     const [_, availablePlayers] = useSelector(state => state.people.filteredPlayers || state.people.partitionedPlayers);
     const useCourtRandoms = useSelector(state => state.selected.useCourtRandoms);
     const dispatch = useDispatch();
 
-    const handleRansomsChecked = () => {
+    const handleRandomsChecked = () => {
         const futureUsingRandoms = !useCourtRandoms;
         if (futureUsingRandoms) {
             dispatch(deselectPlayers());
@@ -23,25 +23,20 @@ export default function PlayerSelector() {
         dispatch(requestPlayers());
     }, []);
 
-    const randomsText = useCourtRandoms ? "Randoms" : <strike>Randoms</strike>;
-
     return (
-        <IonList>
-            <IonListHeader lines="none">
-                Use Randoms?
-                <IonButton checked={useCourtRandoms}
-                           onclick={handleRansomsChecked}
-                           size="small"
-                           children={randomsText}/>
-            </IonListHeader>
+        <List>
+            <Radio.Group className="mb-1 d-flex justify-content-center"
+                         onChange={handleRandomsChecked}
+                         defaultValue={useCourtRandoms}>
+                <Radio.Button value={false} checked={!useCourtRandoms}>Use Players?</Radio.Button>
+                <Radio.Button value={true} checked={useCourtRandoms}>Use Randoms?</Radio.Button>
+            </Radio.Group>
 
-            <IonListHeader>
-                <IonLabel>Available players</IonLabel>
-            </IonListHeader>
+            <div className="list-header">Available players</div>
 
             {availablePlayers.map(player => (
                 <PlayerSelect player={player} key={player._id}/>
             ))}
-        </IonList>
+        </List>
     );
 }
