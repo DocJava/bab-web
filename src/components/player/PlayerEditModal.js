@@ -1,9 +1,9 @@
 import {useDispatch, useSelector} from "react-redux";
 import {cancelPlayerUpdate, updatePlayer} from "../../actions";
 import React, {useState} from "react";
-import {IonCardHeader, IonCardTitle, IonInput, IonItem, IonItemDivider, IonLabel} from "@ionic/react";
 import PasswordSelector from "../../containers/PasswordSelector";
 import {Modal} from "../Modal";
+import {Divider, Input} from "antd";
 
 export default function PlayerEditModal() {
     const dispatch = useDispatch();
@@ -16,31 +16,28 @@ export default function PlayerEditModal() {
     const handlePlayerUpdate = () => dispatch(updatePlayer(player, newPlayerName, newPlayerPassword));
     const handleNameChange = (e) => updateNewPlayerName(e.target.value);
 
+    const title = <>
+        {player.name} : {player.password}
+    </>;
+
     return (
         <Modal modalId="playerEditModal"
-                  onCancel={handleCancel}
-                  onSuccess={handlePlayerUpdate}>
-            <IonCardHeader className="mb-2">
-                <IonCardTitle>{player.name} : {player.password}</IonCardTitle>
-            </IonCardHeader>
+               onCancel={handleCancel}
+               onSuccess={handlePlayerUpdate}
+               title={title}>
 
-            <IonItem lines="none">
-                <span className="mr-2 text-muted">Name:</span>
-                <IonInput placeholder="Enter Name"
-                          value={newPlayerName}
-                          onIonChange={handleNameChange}/>
-            </IonItem>
+            <Input className="mb-2"
+                   addonBefore="Name:"
+                   placeholder="Enter Name"
+                   value={newPlayerName}
+                   onChange={handleNameChange}/>
 
             <PasswordSelector selectedPassword={newPlayerPassword}
                               updatePassword={updateNewPlayerPassword}/>
 
-            <IonItemDivider/>
+            <Divider/>
 
-            <IonItem lines="full">
-                <IonLabel><span
-                    className="text-muted">Is this correct?</span> {newPlayerName} : {newPlayerPassword}
-                </IonLabel>
-            </IonItem>
+            <span className="text-muted">Is this correct?</span> {newPlayerName} : {newPlayerPassword}
         </Modal>
     );
 }
