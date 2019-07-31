@@ -8,9 +8,7 @@ import PlayerCreateModal from "../../components/player/PlayerCreateModal";
 import {Layout, List} from "antd";
 import {PlayerPanelFooter} from "../../components/player/PlayerPanelFooter";
 
-
 const { Content, Footer } = Layout;
-
 
 export default function PlayerPanel() {
     const [reservedPlayers, availablePlayers] = useSelector(state => state.people.filteredPlayers || state.people.partitionedPlayers);
@@ -21,7 +19,7 @@ export default function PlayerPanel() {
     }
 
     useEffect(() => {
-        updateScreenInformation()
+        updateScreenInformation();
     }, []);
 
     return (
@@ -29,7 +27,7 @@ export default function PlayerPanel() {
             <Content>
                 <List className="pb-5">
                     <div className="list-header">Available players</div>
-                    {availablePlayers.map(player => <PlayerListItem player={player}/>)}
+                    {availablePlayers.map(player => <PlayerListItem player={player} key={player._id}/>)}
 
                     <div className="list-header">Players in use</div>
                     {reservedPlayers.map(player => <PlayerListItem player={player} key={player._id}/>)}
