@@ -42,7 +42,6 @@ export const FILTER_MEMBER = 'FILTER_MEMBER';
 export const CANCEL_MEMBER_CREATE = 'CANCEL_MEMBER_CREATE';
 
 export const SET_TOAST = "SET_TOAST";
-export const CLEAR_TOAST = "CLEAR_TOAST";
 export const DISPLAY_MODAL = "DISPLAY_MODAL";
 export const CLEAR_MODAL = "CLEAR_MODAL";
 
@@ -261,12 +260,6 @@ export async function removeReservation(reservation) {
     return {
         type,
         payload
-    };
-}
-
-export function clearToast() {
-    return {
-        type: CLEAR_TOAST
     };
 }
 

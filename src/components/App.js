@@ -4,7 +4,6 @@ import '../style/App.css';
 import MemberPanel from '../containers/member/MemberPanel';
 import PlayerPanel from '../containers/player/PlayerPanel';
 import CourtPanel from '../containers/court/CourtPanel';
-import Toast from "./Toast";
 import {FloatingActionButton} from "./FloatingActionButton";
 import {Col, Layout, Row, Typography} from 'antd';
 
@@ -54,24 +53,18 @@ export default function App() {
     );
 
     const body = (
-        <>
+        <Content>
             {pane}
 
             {floatingActionButton}
-
-            <Toast/>
-        </>
+        </Content>
     );
 
     return (
         <Layout className="main-layout">
             {header}
 
-            <Content>
-                {body}
-
-                {floatingActionButton}
-            </Content>
+            {body}
         </Layout>
     );
 }
