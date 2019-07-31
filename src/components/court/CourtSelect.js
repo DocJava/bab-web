@@ -1,5 +1,5 @@
 import React from 'react';
-import {IonCard, IonCardSubtitle, IonItem} from "@ionic/react";
+import {Card} from 'antd';
 import {displayModal, selectCourtNumber} from "../../actions";
 import {useDispatch} from "react-redux";
 
@@ -9,17 +9,16 @@ export default function CourtSelect({ court }) {
     const handleSelection = () => {
         dispatch(selectCourtNumber(court));
         dispatch(displayModal("courtEditModal"));
-    }
+    };
 
     return (
-        <IonCard onclick={handleSelection}>
-            <IonItem>
-                <IonCardSubtitle>Court {court.courtNumber}</IonCardSubtitle>
-            </IonItem>
+        <Card className="m-3"
+              size="small"
+              type="inner"
+              title={`Court ${court.courtNumber}`}
+              onClick={handleSelection}>
 
-            <div className="card-body py-3">
-                {court.time}
-            </div>
-        </IonCard>
+            {court.time}
+        </Card>
     )
 }

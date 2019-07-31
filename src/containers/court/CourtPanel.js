@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {requestCourts, requestPlayers} from "../../actions";
 import CourtSelect from "../../components/court/CourtSelect";
-import {IonLabel, IonList, IonListHeader} from "@ionic/react";
+import {List} from 'antd';
 
 import {CourtCreateModal} from '../../components/court/CourtCreateModal';
 import {CourtEditModal} from "../../components/court/CourtEditModal";
@@ -27,31 +27,23 @@ export default function CourtPanel() {
     }, []);
 
     const courtsFor = (courtList) => {
-        return (
-            <>
-                {courtList.map(court => (
-                    <CourtSelect court={court}
-                                 key={court.id}/>
-                ))}
-            </>
-        );
+        return courtList.map(court => (
+            <CourtSelect court={court}
+                         key={court._id}/>
+        ));
     };
 
     return (
         <>
-            <IonList>
-                <IonListHeader>
-                    <IonLabel>Current Courts</IonLabel>
-                </IonListHeader>
+            <List>
+                <div className="list-header">Current Courts</div>
 
                 {courtsFor(current)}
 
-                <IonListHeader>
-                    <IonLabel>Upcoming Courts</IonLabel>
-                </IonListHeader>
+                <div className="list-header">Upcoming Courts</div>
 
                 {courtsFor(upcoming)}
-            </IonList>
+            </List>
 
             <CourtCreateModal/>
             <CourtEditModal/>
