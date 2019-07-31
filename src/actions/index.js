@@ -279,6 +279,7 @@ export function displayModal(modalId = "pageModal") {
 
 export function clearModal() {
     return {
-        type: CLEAR_MODAL
+        type: CLEAR_MODAL,
+        payload: Promise.resolve()
     };
 }

@@ -33,19 +33,20 @@ export function ModalFooter({ onCancel, onSuccess, successEnabled = true }) {
     const dispatch = useDispatch();
 
     const handleCancel = () => {
-        if (onCancel) {
-            onCancel();
-        }
-
         closeOpenSlider();
-        dispatch(clearModal());
+        dispatch(clearModal()).then(() => {
+            if (onCancel) {
+                onCancel();
+            }
+        });
     };
 
     const handleSuccess = () => {
-        if (onSuccess) {
-            onSuccess();
-        }
-        dispatch(clearModal());
+        dispatch(clearModal()).then(() => {
+            if (onSuccess) {
+                onSuccess();
+            }
+        });
     };
 
     return (
