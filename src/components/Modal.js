@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {clearModal} from "../actions";
-import {Modal as AntModal, Row} from 'antd';
+import {Modal as AntModal} from 'antd';
 
 export function Modal({ children, modalId = "pageModal", onCancel, onSuccess, successEnabled = true, title }) {
     const dispatch = useDispatch();
@@ -37,13 +37,5 @@ export function Modal({ children, modalId = "pageModal", onCancel, onSuccess, su
         >
             {children}
         </AntModal>
-    );
-}
-
-export function ModalHeader({ children }) {
-    return (
-        <Row>
-            {children}
-        </Row>
     );
 }
