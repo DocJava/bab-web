@@ -141,10 +141,6 @@ function chunkify(list) {
 
     list = _.chunk(list, CHUNK_SIZE);
 
-    if (_.last(list).length !== CHUNK_SIZE) {
-        _.last(list)[CHUNK_SIZE - 1] = undefined;
-    }
-
     return list;
 }
 

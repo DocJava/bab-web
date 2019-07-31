@@ -2,11 +2,9 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {memberFilterChanged, requestMembers} from "../../actions";
 import MemberSelect from "../../components/member/MemberSelect";
-import {IonCol, IonFooter, IonGrid, IonRow, IonSearchbar, IonToolbar} from "@ionic/react";
 
 import {MemberCreateModal} from '../../components/member/MemberCreateModal';
-import Refresher from "../../components/Refresher";
-import {Layout} from "antd";
+import {Layout, Row, Col, Input, Icon} from "antd";
 
 const { Content, Footer } = Layout;
 
@@ -22,32 +20,20 @@ export default function MemberSelector() {
         updateScreenInformation()
     }, []);
 
-    const createRow = (memberChunk) => (
-        <IonRow>
-            {memberChunk.map(member => (
-                <IonCol>
-                    {createColElement(member)}
-                </IonCol>
+    const createRow = (memberChunk, index) => (
+        <Row key={index}>
+            {memberChunk.map((member, index) => (
+                <Col className="p-2" span={8} key={index}>
+                    <MemberSelect member={member} key={member._id} isNewMember={member.isNew}/>
+                </Col>
             ))}
-        </IonRow>
+        </Row>
     );
-
-    function createColElement(member) {
-        if (member) {
-            return <MemberSelect member={member} key={member._id} isNewMember={member.isNew}/>
-        }
-
-        return <span/>
-    }
 
     return (
         <Layout>
             <Content>
-                <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
-
-                <IonGrid title="Members">
-                    {memberChunks.map(createRow)}
-                </IonGrid>
+                {memberChunks.map(createRow)}
 
                 <MemberCreateModal/>
             </Content>
@@ -67,13 +53,12 @@ export function MemberSelectorFooter() {
     const updateFilter = (event) => dispatch(memberFilterChanged(event.target.value));
 
     return (
-        <IonFooter>
-            <IonToolbar>
-                <IonSearchbar style={{ '--placeholder-color': 'blue' }}
-                              placeholder="Filter or add Member"
-                              value={memberNameFilter}
-                              onIonInput={updateFilter}/>
-            </IonToolbar>
-        </IonFooter>
+        <Input
+            placeholder="Filter or add Member"
+            size="large"
+            prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+            value={memberNameFilter}
+            onChange={updateFilter}
+        />
     );
 }
