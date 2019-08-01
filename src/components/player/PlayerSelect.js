@@ -2,7 +2,8 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectPlayer} from "../../actions";
 import _ from 'lodash';
-import {IonCheckbox, IonItem, IonLabel} from '@ionic/react';
+
+import {List, Checkbox} from 'antd';
 
 export default function PlayerSelect({ player, ignoreEdit }) {
     const selectedPlayers = useSelector(state => state.selected.players);
@@ -12,13 +13,19 @@ export default function PlayerSelect({ player, ignoreEdit }) {
 
     const handleSelectPlayer = () => dispatch(selectPlayer(player));
 
-    const selectedColor = isSelected ? "success" : "dark";
+    const selectedColor = isSelected ? "text-primary" : "text-dark";
 
     return (
-        <IonItem onClick={handleSelectPlayer}>
-            <IonCheckbox className="mr-1" checked={isSelected}/>
-            <IonLabel color={selectedColor}>{player.name}</IonLabel>
-            <span slot="end" className="text-muted">{player.password}</span>
-        </IonItem>
+        <List.Item onClick={handleSelectPlayer}>
+            <List.Item.Meta
+                description={
+                    <Checkbox checked={isSelected}>
+                        <span className={selectedColor}>{player.name}</span>
+                    </Checkbox>}
+            />
+            <div>
+                <span className={selectedColor}>{player.password}</span>
+            </div>
+        </List.Item>
     )
 }

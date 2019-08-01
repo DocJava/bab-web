@@ -1,25 +1,28 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {requestCourts, requestPlayers} from "../../actions";
+import {displayModal, requestCourts, requestPlayers} from "../../actions";
 import CourtSelect from "../../components/court/CourtSelect";
-import {IonLabel, IonList, IonListHeader} from "@ionic/react";
+import {List, Layout, Button} from 'antd';
 
 import {CourtCreateModal} from '../../components/court/CourtCreateModal';
-import Refresher from "../../components/Refresher";
 import {CourtEditModal} from "../../components/court/CourtEditModal";
+
+const { Content, Footer } = Layout;
 
 const twoMinutesMillis = 120000;
 
 export default function CourtPanel() {
-    const { current, upcoming } = useSelector(state => state.courts);
     const dispatch = useDispatch();
+    const { current, upcoming } = useSelector(state => state.courts);
+
+    const handleAddClick = () => dispatch(displayModal());
 
     function updateScreenInformation() {
         return dispatch(requestCourts()).then(() => dispatch(requestPlayers()));
     }
 
     useEffect(() => {
-        updateScreenInformation()
+        updateScreenInformation();
     }, []);
 
     useEffect(() => {
@@ -28,36 +31,35 @@ export default function CourtPanel() {
     }, []);
 
     const courtsFor = (courtList) => {
-        return (
-            <>
-                {courtList.map(court => (
-                    <CourtSelect court={court}
-                                 key={court.id}/>
-                ))}
-            </>
-        );
+        return courtList.map(court => (
+            <CourtSelect court={court}
+                         key={court._id}/>
+        ));
     };
 
     return (
-        <>
-            <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
+        <Layout>
+            <Content>
+                <List>
+                    <div className="list-header">Current Courts</div>
 
-            <IonList>
-                <IonListHeader>
-                    <IonLabel>Current Courts</IonLabel>
-                </IonListHeader>
+                    {courtsFor(current)}
 
-                {courtsFor(current)}
+                    <div className="list-header">Upcoming Courts</div>
 
-                <IonListHeader>
-                    <IonLabel>Upcoming Courts</IonLabel>
-                </IonListHeader>
+                    {courtsFor(upcoming)}
+                </List>
+            </Content>
 
-                {courtsFor(upcoming)}
-            </IonList>
+            <Footer>
+                <Button className="w-100"
+                        onClick={handleAddClick}>
+                    Add Court
+                </Button>
+            </Footer>
 
             <CourtCreateModal/>
             <CourtEditModal/>
-        </>
+        </Layout>
     );
 }

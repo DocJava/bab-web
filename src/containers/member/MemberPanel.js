@@ -2,69 +2,52 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {memberFilterChanged, requestMembers} from "../../actions";
 import MemberSelect from "../../components/member/MemberSelect";
-import {IonCol, IonFooter, IonGrid, IonRow, IonSearchbar, IonToolbar} from "@ionic/react";
 
 import {MemberCreateModal} from '../../components/member/MemberCreateModal';
-import Refresher from "../../components/Refresher";
+import {Layout, Row, Col, Input, Icon} from "antd";
+
+const { Content, Header } = Layout;
 
 export default function MemberSelector() {
-    const memberChunks = useSelector(state => state.people.filteredMembers || state.people.chunkedMembers);
     const dispatch = useDispatch();
+    const memberChunks = useSelector(state => state.people.filteredMembers || state.people.chunkedMembers);
+    const memberNameFilter = useSelector(state => state.selected.memberNameFilter);
 
-    function updateScreenInformation() {
-        return dispatch(requestMembers());
-    }
+    const updateFilter = (event) => dispatch(memberFilterChanged(event.target.value));
+
+    const updateScreenInformation = () => dispatch(requestMembers());
 
     useEffect(() => {
         updateScreenInformation()
     }, []);
 
-    const createRow = (memberChunk) => (
-        <IonRow>
-            {memberChunk.map(member => (
-                <IonCol>
-                    {createColElement(member)}
-                </IonCol>
+    const createRow = (memberChunk, index) => (
+        <Row key={index}>
+            {memberChunk.map((member, index) => (
+                <Col className="p-2" span={8} key={index}>
+                    <MemberSelect member={member} key={member._id} isNewMember={member.isNew}/>
+                </Col>
             ))}
-        </IonRow>
+        </Row>
     );
 
-    function createColElement(member) {
-        if (member) {
-            return <MemberSelect member={member} key={member._id} isNewMember={member.isNew}/>
-        }
-
-        return <span/>
-    }
-
     return (
-        <>
-            <Refresher updateScreenInfoCallBack={updateScreenInformation}/>
+        <Layout>
+            <Header>
+                <Input className="pr-2 pl-2"
+                       placeholder="Filter or add Member"
+                       size="large"
+                       prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                       value={memberNameFilter}
+                       onChange={updateFilter}
+                />
+            </Header>
 
-            <IonGrid title="Members">
+            <Content>
                 {memberChunks.map(createRow)}
-            </IonGrid>
 
-            <MemberCreateModal/>
-        </>
-    );
-}
-
-
-export function MemberSelectorFooter() {
-    const dispatch = useDispatch();
-    const memberNameFilter = useSelector(state => state.selected.memberNameFilter);
-
-    const updateFilter = (event) => dispatch(memberFilterChanged(event.target.value));
-
-    return (
-        <IonFooter>
-            <IonToolbar>
-                <IonSearchbar style={{ '--placeholder-color': 'blue' }}
-                              placeholder="Filter or add Member"
-                              value={memberNameFilter}
-                              onIonInput={updateFilter}/>
-            </IonToolbar>
-        </IonFooter>
+                <MemberCreateModal/>
+            </Content>
+        </Layout>
     );
 }

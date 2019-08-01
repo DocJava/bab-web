@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {createCourt, deselectPlayers} from "../../actions";
 import PlayerSelector from '../../containers/player/PlayerSelector';
-import {Modal, ModalFooter, ModalHeader} from '../Modal';
-import {IonCol, IonInput, IonItem} from "@ionic/react";
+import {Modal} from '../Modal';
+
+import {Input} from 'antd';
 
 export function CourtCreateModal() {
     const dispatch = useDispatch();
@@ -21,34 +22,28 @@ export function CourtCreateModal() {
     };
 
     return (
-        <Modal>
-            <ModalHeader>
-                <IonCol>
-                    <IonItem lines="none">
-                        <span className="mr-2 text-muted">Court Number:</span>
-                        <IonInput placeholder="Enter Court Number"
-                                  type="number"
-                                  value={courtNumber}
-                                  onIonChange={(e) => setCourtNumber(e.target.value)}/>
-                    </IonItem>
-                </IonCol>
+        <Modal
+            onCancel={handleCancel}
+            onSuccess={handleCreateCourt}
+            successEnabled={courtCreatable}
+            title="Create Court">
 
-                <IonCol slot="end">
-                    <IonItem lines="none">
-                        <span className="mr-2 text-muted">Delay:</span>
-                        <IonInput placeholder="Enter Delay"
-                                  type="number"
-                                  value={delay}
-                                  onIonChange={(e) => setDelay(e.target.value)}/>
-                    </IonItem>
-                </IonCol>
-            </ModalHeader>
+            <Input
+                addonBefore="Court Number:"
+                placeholder="Enter Court Number"
+                type="number"
+                value={courtNumber}
+                onChange={(e) => setCourtNumber(e.target.value)}/>
+
+            <Input
+                className="mb-2"
+                addonBefore="Court Delay:"
+                placeholder="Enter Delay"
+                type="number"
+                value={delay}
+                onChange={(e) => setDelay(e.target.value)}/>
 
             <PlayerSelector/>
-
-            <ModalFooter onCancel={handleCancel}
-                         onSuccess={handleCreateCourt}
-                         successEnabled={courtCreatable}/>
 
         </Modal>
     );
