@@ -38,7 +38,7 @@ export default function PlayerPanel() {
 
             <Content className="h-100">
                 <List className="pb-5">
-                    <div className="list-header">Available players</div>
+                    <div className="list-header">Available Players</div>
                     {availablePlayers.map(player => <PlayerListItem player={player} key={player._id}/>)}
 
                     <div className="list-header">Players in use</div>
