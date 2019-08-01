@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/bab-web/static/css/main.4d7dd14c.chunk.css",
-    "main.js": "/bab-web/static/js/main.4ab7f3ef.chunk.js",
-    "main.js.map": "/bab-web/static/js/main.4ab7f3ef.chunk.js.map",
+    "main.js": "/bab-web/static/js/main.8a4e0ee3.chunk.js",
+    "main.js.map": "/bab-web/static/js/main.8a4e0ee3.chunk.js.map",
     "runtime~main.js": "/bab-web/static/js/runtime~main.365fb807.js",
     "runtime~main.js.map": "/bab-web/static/js/runtime~main.365fb807.js.map",
     "static/css/2.46439c26.chunk.css": "/bab-web/static/css/2.46439c26.chunk.css",
     "static/js/2.885ee55d.chunk.js": "/bab-web/static/js/2.885ee55d.chunk.js",
     "static/js/2.885ee55d.chunk.js.map": "/bab-web/static/js/2.885ee55d.chunk.js.map",
     "index.html": "/bab-web/index.html",
-    "precache-manifest.68caf5fb4545e775ef0f1c09b18de53e.js": "/bab-web/precache-manifest.68caf5fb4545e775ef0f1c09b18de53e.js",
+    "precache-manifest.0d4b6311caf0fd0109c1fba51a4a4c5f.js": "/bab-web/precache-manifest.0d4b6311caf0fd0109c1fba51a4a4c5f.js",
     "service-worker.js": "/bab-web/service-worker.js",
     "static/css/2.46439c26.chunk.css.map": "/bab-web/static/css/2.46439c26.chunk.css.map",
     "static/css/main.4d7dd14c.chunk.css.map": "/bab-web/static/css/main.4d7dd14c.chunk.css.map"
