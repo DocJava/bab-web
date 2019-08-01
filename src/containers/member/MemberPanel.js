@@ -6,15 +6,16 @@ import MemberSelect from "../../components/member/MemberSelect";
 import {MemberCreateModal} from '../../components/member/MemberCreateModal';
 import {Layout, Row, Col, Input, Icon} from "antd";
 
-const { Content, Footer } = Layout;
+const { Content, Header } = Layout;
 
 export default function MemberSelector() {
-    const memberChunks = useSelector(state => state.people.filteredMembers || state.people.chunkedMembers);
     const dispatch = useDispatch();
+    const memberChunks = useSelector(state => state.people.filteredMembers || state.people.chunkedMembers);
+    const memberNameFilter = useSelector(state => state.selected.memberNameFilter);
 
-    function updateScreenInformation() {
-        return dispatch(requestMembers());
-    }
+    const updateFilter = (event) => dispatch(memberFilterChanged(event.target.value));
+
+    const updateScreenInformation = () => dispatch(requestMembers());
 
     useEffect(() => {
         updateScreenInformation()
@@ -32,33 +33,21 @@ export default function MemberSelector() {
 
     return (
         <Layout>
+            <Header>
+                <Input className="pr-2 pl-2"
+                       placeholder="Filter or add Member"
+                       size="large"
+                       prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                       value={memberNameFilter}
+                       onChange={updateFilter}
+                />
+            </Header>
+
             <Content>
                 {memberChunks.map(createRow)}
 
                 <MemberCreateModal/>
             </Content>
-
-            <Footer>
-                <MemberSelectorFooter/>
-            </Footer>
         </Layout>
-    );
-}
-
-
-export function MemberSelectorFooter() {
-    const dispatch = useDispatch();
-    const memberNameFilter = useSelector(state => state.selected.memberNameFilter);
-
-    const updateFilter = (event) => dispatch(memberFilterChanged(event.target.value));
-
-    return (
-        <Input
-            placeholder="Filter or add Member"
-            size="large"
-            prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }}/>}
-            value={memberNameFilter}
-            onChange={updateFilter}
-        />
     );
 }

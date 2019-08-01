@@ -20,7 +20,7 @@ html, body, #root, .main-layout {
     min-height: 100%;
 }
 
-.main-header {
+.ant-layout-header {
     padding: 0;
     height: fit-content;
     display: block;
@@ -29,6 +29,7 @@ html, body, #root, .main-layout {
     right: 0;
     left: 0;
     z-index: 1;
+    background-color: white;
 }
 
 .main-header h3 {

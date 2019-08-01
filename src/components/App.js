@@ -4,7 +4,6 @@ import '../style/App.css';
 import MemberPanel from '../containers/member/MemberPanel';
 import PlayerPanel from '../containers/player/PlayerPanel';
 import CourtPanel from '../containers/court/CourtPanel';
-import {FloatingActionButton} from "./FloatingActionButton";
 import {Col, Layout, Row, Typography} from 'antd';
 
 const { Title} = Typography;
@@ -20,8 +19,6 @@ export default function App() {
 
     let pane = null;
 
-    let floatingActionButton = <FloatingActionButton/>;
-
     switch (selectedPane) {
         case PLAYER_PANE:
             pane = <PlayerPanel/>;
@@ -33,7 +30,6 @@ export default function App() {
 
         case MEMBER_PANE:
             pane = <MemberPanel/>;
-            floatingActionButton = null;
     }
 
     const headerCol = (PANE, text) => (
@@ -55,8 +51,6 @@ export default function App() {
     const body = (
         <Content>
             {pane}
-
-            {floatingActionButton}
         </Content>
     );
 

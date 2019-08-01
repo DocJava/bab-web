@@ -1,22 +1,23 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {requestPlayers} from "../../actions";
+import {displayModal, playerFilterChanged, requestPlayers} from "../../actions";
 import PlayerListItem from "../../components/player/PlayerListItem";
 
 import PlayerEditModal from "../../components/player/PlayerEditModal";
 import PlayerCreateModal from "../../components/player/PlayerCreateModal";
-import {Layout, List} from "antd";
-import {PlayerPanelFooter} from "../../components/player/PlayerPanelFooter";
+import {Layout, List, Input, Icon, Button} from "antd";
 
-const { Content, Footer } = Layout;
+const { Content, Footer, Header } = Layout;
 
 export default function PlayerPanel() {
-    const [reservedPlayers, availablePlayers] = useSelector(state => state.people.filteredPlayers || state.people.partitionedPlayers);
     const dispatch = useDispatch();
+    const [reservedPlayers, availablePlayers] = useSelector(state => state.people.filteredPlayers || state.people.partitionedPlayers);
+    const playerNameFilter = useSelector(state => state.selected.playerNameFilter);
 
-    function updateScreenInformation() {
-        return dispatch(requestPlayers());
-    }
+    const updateFilter = (event) => dispatch(playerFilterChanged(event.target.value));
+    const handleAddClick = () => dispatch(displayModal());
+
+    const updateScreenInformation = () => dispatch(requestPlayers());
 
     useEffect(() => {
         updateScreenInformation();
@@ -24,7 +25,18 @@ export default function PlayerPanel() {
 
     return (
         <Layout>
-            <Content>
+            <Header>
+                <Input
+                    className="pr-2 pl-2"
+                    placeholder="Filter or add Player"
+                    size="large"
+                    prefix={<Icon type="search" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                    value={playerNameFilter}
+                    onChange={updateFilter}
+                />
+            </Header>
+
+            <Content className="h-100">
                 <List className="pb-5">
                     <div className="list-header">Available players</div>
                     {availablePlayers.map(player => <PlayerListItem player={player} key={player._id}/>)}
@@ -35,7 +47,10 @@ export default function PlayerPanel() {
             </Content>
 
             <Footer>
-                <PlayerPanelFooter/>
+                <Button className="w-100"
+                        onClick={handleAddClick}>
+                    Add Player
+                </Button>
             </Footer>
 
             <PlayerEditModal/>
