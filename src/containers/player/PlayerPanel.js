@@ -10,7 +10,7 @@ import App from "../../components/App";
 
 const { Content, Footer, Header } = Layout;
 
-export default function PlayerPanel(props) {
+export default function PlayerPanel() {
     const dispatch = useDispatch();
     const [reservedPlayers, availablePlayers] = useSelector(state => state.people.filteredPlayers || state.people.partitionedPlayers);
     const playerNameFilter = useSelector(state => state.selected.playerNameFilter);
@@ -25,7 +25,7 @@ export default function PlayerPanel(props) {
     }, []);
 
     return (
-        <App {...props}>
+        <App>
             <Header>
                 <Input
                     className="pr-2 pl-2"

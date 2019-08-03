@@ -1,12 +1,13 @@
 import React from 'react';
 import '../style/App.css';
 import {Col, Layout, Row, Typography} from 'antd';
+import { withRouter } from "react-router";
 
 const { Title } = Typography;
 
 const { Header, Content } = Layout;
 
-export default function App({ match, history, children }) {
+function App({ match, history, children }) {
     const handlePanelSelection = (e) => () => {
         return history.push(e.toLowerCase());
     };
@@ -43,3 +44,5 @@ export default function App({ match, history, children }) {
         </Layout>
     );
 }
+
+export default withRouter(App);

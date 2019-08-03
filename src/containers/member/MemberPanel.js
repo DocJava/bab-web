@@ -9,7 +9,7 @@ import App from "../../components/App";
 
 const { Content, Header } = Layout;
 
-export default function MemberSelector(props) {
+export default function MemberSelector() {
     const dispatch = useDispatch();
     const memberChunks = useSelector(state => state.people.filteredMembers || state.people.chunkedMembers);
     const memberNameFilter = useSelector(state => state.selected.memberNameFilter);
@@ -33,7 +33,7 @@ export default function MemberSelector(props) {
     );
 
     return (
-        <App {...props}>
+        <App>
             <Header>
                 <Input className="pr-2 pl-2"
                        placeholder="Filter or add Member"

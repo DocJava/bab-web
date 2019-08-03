@@ -12,7 +12,7 @@ const { Content, Footer } = Layout;
 
 const twoMinutesMillis = 120000;
 
-export default function CourtPanel(props) {
+export default function CourtPanel() {
     const dispatch = useDispatch();
     const { current, upcoming } = useSelector(state => state.courts);
 
@@ -39,7 +39,7 @@ export default function CourtPanel(props) {
     };
 
     return (
-        <App {...props}>
+        <App>
             <Content>
                 <List>
                     <div className="list-header">Current Courts</div>
