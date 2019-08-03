@@ -4,17 +4,25 @@ import {Provider} from "react-redux";
 import {applyMiddleware, createStore} from "redux";
 import ReduxPromise from "redux-promise";
 import './style/index.css';
-import HomePage from './components/App';
 import reducers from "./reducers";
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import CourtPanel from "./containers/court/CourtPanel";
+import PlayerPanel from "./containers/player/PlayerPanel";
+import MemberPanel from "./containers/member/MemberPanel";
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
         <Router>
-            <Route path="/:pane?" component={HomePage}/>
+            <Switch>
+                <Route path="/courts" component={CourtPanel}/>
+                <Route path="/players" component={PlayerPanel}/>
+                <Route path="/members" component={MemberPanel}/>
+
+                <Route exact path="/" component={CourtPanel}/>
+            </Switch>
         </Router>
     </Provider>,
     document.getElementById('root')

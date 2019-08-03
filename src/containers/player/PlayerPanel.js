@@ -6,10 +6,11 @@ import PlayerListItem from "../../components/player/PlayerListItem";
 import PlayerEditModal from "../../components/player/PlayerEditModal";
 import PlayerCreateModal from "../../components/player/PlayerCreateModal";
 import {Layout, List, Input, Icon, Button} from "antd";
+import App from "../../components/App";
 
 const { Content, Footer, Header } = Layout;
 
-export default function PlayerPanel() {
+export default function PlayerPanel(props) {
     const dispatch = useDispatch();
     const [reservedPlayers, availablePlayers] = useSelector(state => state.people.filteredPlayers || state.people.partitionedPlayers);
     const playerNameFilter = useSelector(state => state.selected.playerNameFilter);
@@ -24,7 +25,7 @@ export default function PlayerPanel() {
     }, []);
 
     return (
-        <Layout>
+        <App {...props}>
             <Header>
                 <Input
                     className="pr-2 pl-2"
@@ -55,6 +56,6 @@ export default function PlayerPanel() {
 
             <PlayerEditModal/>
             <PlayerCreateModal/>
-        </Layout>
+        </App>
     );
 }

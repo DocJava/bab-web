@@ -5,10 +5,11 @@ import MemberSelect from "../../components/member/MemberSelect";
 
 import {MemberCreateModal} from '../../components/member/MemberCreateModal';
 import {Layout, Row, Col, Input, Icon} from "antd";
+import App from "../../components/App";
 
 const { Content, Header } = Layout;
 
-export default function MemberSelector() {
+export default function MemberSelector(props) {
     const dispatch = useDispatch();
     const memberChunks = useSelector(state => state.people.filteredMembers || state.people.chunkedMembers);
     const memberNameFilter = useSelector(state => state.selected.memberNameFilter);
@@ -32,7 +33,7 @@ export default function MemberSelector() {
     );
 
     return (
-        <Layout>
+        <App {...props}>
             <Header>
                 <Input className="pr-2 pl-2"
                        placeholder="Filter or add Member"
@@ -48,6 +49,6 @@ export default function MemberSelector() {
 
                 <MemberCreateModal/>
             </Content>
-        </Layout>
+        </App>
     );
 }

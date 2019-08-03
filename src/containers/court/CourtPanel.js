@@ -6,12 +6,13 @@ import {List, Layout, Button} from 'antd';
 
 import {CourtCreateModal} from '../../components/court/CourtCreateModal';
 import {CourtEditModal} from "../../components/court/CourtEditModal";
+import App from "../../components/App";
 
 const { Content, Footer } = Layout;
 
 const twoMinutesMillis = 120000;
 
-export default function CourtPanel() {
+export default function CourtPanel(props) {
     const dispatch = useDispatch();
     const { current, upcoming } = useSelector(state => state.courts);
 
@@ -38,7 +39,7 @@ export default function CourtPanel() {
     };
 
     return (
-        <Layout>
+        <App {...props}>
             <Content>
                 <List>
                     <div className="list-header">Current Courts</div>
@@ -60,6 +61,6 @@ export default function CourtPanel() {
 
             <CourtCreateModal/>
             <CourtEditModal/>
-        </Layout>
+        </App>
     );
 }
